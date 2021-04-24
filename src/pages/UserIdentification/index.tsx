@@ -40,11 +40,15 @@ export function UserIdentification() {
 
 
   async function handleSubmit() {
-    if(!name){
+    if (!name) {
       return Alert.alert('Me diga como posso chamar você 😢')
     }
-    await AsyncStorage.setItem('@plantmanager:user', name)
-    navigation.navigate('Confirmation')
+    try {
+      await AsyncStorage.setItem('@plantmanager:user', name)
+      navigation.navigate('Confirmation')
+    } catch (error) {
+      return Alert.alert('Não foi possível salvar o seu nome 😢')
+    }
   }
 
   return (
@@ -88,7 +92,7 @@ export function UserIdentification() {
             </View>
 
           </View>
-        
+
         </TouchableWithoutFeedback>
 
       </KeyboardAvoidingView>

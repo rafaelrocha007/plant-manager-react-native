@@ -8,24 +8,8 @@ import api from '../../services/api'
 import { PlantCardPrimary } from '../../components/PlantCardPrimary'
 import { Load } from '../../components/Load'
 import colors from '../../styles/colors'
-
-type EnvironmentProps = {
-  key: string
-  title: string
-}
-
-type PlantProps = {
-  id: string
-  name: string
-  about: string
-  water_tips: string
-  photo: string
-  environments: [string]
-  frequency: {
-    times: number
-    repeat_every: string
-  }
-}
+import { useNavigation } from '@react-navigation/core'
+import { PlantProps, EnvironmentProps } from '../../libs/storage'
 
 export function PlantSelect() {
 
@@ -36,6 +20,8 @@ export function PlantSelect() {
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [loadingMore, setLoadingMore] = useState(false)
+
+  const navigation = useNavigation()
 
   async function fetchEnvironment() {
     const { data } = await api.get(`plants_environments?_sort=title&_order=asc`)
@@ -84,6 +70,10 @@ export function PlantSelect() {
 
   }
 
+  function handlePlantSelect(plant: PlantProps) {
+    navigation.navigate('PlantSave', { plant })
+  }
+
   useEffect(() => {
     fetchEnvironment()
 
@@ -125,7 +115,10 @@ export function PlantSelect() {
           data={filteredPlants}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
-            <PlantCardPrimary data={item} />
+            <PlantCardPrimary
+              data={item}
+              onPress={() => handlePlantSelect(item)}
+            />
           )}
           showsVerticalScrollIndicator={false}
           numColumns={2}

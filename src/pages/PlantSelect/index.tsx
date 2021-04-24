@@ -36,7 +36,6 @@ export function PlantSelect() {
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [loadingMore, setLoadingMore] = useState(false)
-  const [loadedAll, setLoadedAll] = useState(false)
 
   async function fetchEnvironment() {
     const { data } = await api.get(`plants_environments?_sort=title&_order=asc`)

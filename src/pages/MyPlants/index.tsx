@@ -44,13 +44,13 @@ export function MyPlants() {
     async function loadStorageData() {
       const plantsStored = await loadPlants()
       const nextTime = formatDistance(
-        new Date(plantsStored[0].dateTimeNotification).getTime(),
+        new Date(plantsStored[0]?.dateTimeNotification || null).getTime(),
         new Date().getTime(),
         { locale: pt }
       )
 
       setNextWatered(
-        `Não se esqueça de regar a ${plantsStored[0].name} às ${nextTime} horas.`
+        `Não se esqueça de regar a ${plantsStored[0]?.name || 'sua planta'} em ${nextTime}.`
       )
 
       setMyPlants(plantsStored)

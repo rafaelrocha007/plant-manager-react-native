@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Button } from '../../components/Button'
 import colors from '../../styles/colors'
 import styles from './styles'
+import { asyncStorageUsernameKey } from '../../libs/storage'
 
 export function UserIdentification() {
 
@@ -44,8 +45,14 @@ export function UserIdentification() {
       return Alert.alert('Me diga como posso chamar você 😢')
     }
     try {
-      await AsyncStorage.setItem('@plantmanager:user', name)
-      navigation.navigate('Confirmation')
+      await AsyncStorage.setItem(asyncStorageUsernameKey, name)
+      navigation.navigate('Confirmation', {
+        title: 'Prontinho',
+        subtitle: 'Agora vamos começar a cuidar das suas plantinhas com muito cuidado.',
+        buttonTitle: 'Começar',
+        icon: 'smile',
+        nextScreen: 'PlantSelect'
+      })
     } catch (error) {
       return Alert.alert('Não foi possível salvar o seu nome 😢')
     }

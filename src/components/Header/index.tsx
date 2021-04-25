@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Image, Text, View } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { asyncStorageUsernameKey } from '../../libs/storage'
 import styles from './styles'
 import userImg from '../../assets/user.jpg'
 
@@ -9,7 +10,7 @@ export function Header() {
   const [userName, setUserName] = useState<string>()
   useEffect(() => {
     async function loadStorageUserName() {
-      const user = await AsyncStorage.getItem('@plantmanager:user')
+      const user = await AsyncStorage.getItem(asyncStorageUsernameKey)
       setUserName(user || '')
     }
     loadStorageUserName()

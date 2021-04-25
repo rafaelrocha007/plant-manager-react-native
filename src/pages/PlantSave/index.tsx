@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Text,
@@ -9,14 +9,14 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { SvgFromUri } from 'react-native-svg'
-import { useRoute } from '@react-navigation/core'
+import { useNavigation, useRoute } from '@react-navigation/core'
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker'
 import { format, isBefore } from 'date-fns'
 
 import styles from './styles';
 import waterdrop from '../../assets/waterdrop.png'
 import { Button } from '../../components/Button';
-import { loadPlants, PlantProps, savePlant } from '../../libs/storage';
+import { PlantProps, savePlant } from '../../libs/storage';
 
 type Param = {
   plant: PlantProps
@@ -27,6 +27,7 @@ export function PlantSave() {
   const [showDatePicker, setShowDatePicker] = useState(Platform.OS === 'ios')
 
   const route = useRoute()
+  const navigation = useNavigation()
   const { plant } = route.params as Param
 
   function handleChangeTime(event: Event, dateTime: Date | undefined) {
@@ -50,13 +51,24 @@ export function PlantSave() {
   async function handleSave() {
     try {
       await savePlant({ ...plant, dateTimeNotification: selectedDateTime })
+
+      navigation.navigate('Confirmation', {
+        title: 'Tudo certo',
+        subtitle: 'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com muito cuidado.',
+        buttonTitle: 'Muito obrigado :D',
+        icon: 'hug',
+        nextScreen: 'MyPlants'
+      })
     } catch {
       Alert.alert('Não foi possível salvar.')
     }
   }
 
   return (
-    <>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.container}
+    >
       <View style={styles.container}>
         <View style={styles.plantInfo}>
           <SvgFromUri
@@ -116,6 +128,6 @@ export function PlantSave() {
 
         </View>
       </View>
-    </>
+    </ScrollView>
   )
 }

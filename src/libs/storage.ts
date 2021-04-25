@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { format } from 'date-fns'
 
-const asyncStoragePlantsKey = '@plantmanager:plants'
+export const asyncStoragePlantsKey = '@plantmanager:plants'
+export const asyncStorageUsernameKey = '@plantmanager:user'
 
 export type PlantProps = {
   id: string
@@ -14,6 +15,7 @@ export type PlantProps = {
     times: number
     repeat_every: string
   },
+  hour: string
   dateTimeNotification: Date
 }
 
@@ -30,7 +32,6 @@ export type StoragePlantProps = {
 
 export async function savePlant(plant: PlantProps): Promise<void> {
   try {
-    console.log('plant', plant)
     const data = await AsyncStorage.getItem(asyncStoragePlantsKey)
     const oldPlants = data ? (JSON.parse(data) as StoragePlantProps) : {}
     const newPlant = {
@@ -43,7 +44,6 @@ export async function savePlant(plant: PlantProps): Promise<void> {
       JSON.stringify({ ...newPlant, ...oldPlants })
     )
   } catch (error) {
-    console.log(error)
     throw new Error(error)
   }
 }
@@ -67,9 +67,16 @@ export async function loadPlants(): Promise<PlantProps[]> {
         )
       )
 
-      return plantsSorted
-      
+    return plantsSorted
+
   } catch (error) {
     throw new Error(error)
   }
+}
+
+export async function removePlant(id: string): Promise<void> {
+  const data = await AsyncStorage.getItem(asyncStoragePlantsKey)
+  const plants = data ? (JSON.parse(data) as StoragePlantProps) : {}
+  delete plants[id]
+  await AsyncStorage.setItem(asyncStoragePlantsKey, JSON.stringify(plants))
 }

@@ -15,8 +15,8 @@ export default StyleSheet.create({
   },
   containerActive: {
     fontFamily: fonts.heading,
-    color: colors.green, 
-    backgroundColor: colors.green_light
+    color: colors.primary, 
+    backgroundColor: colors.primary_light
   },
   text: {
     fontSize: 16,
@@ -25,6 +25,6 @@ export default StyleSheet.create({
   },
   textActive: {
     fontFamily: fonts.heading,
-    color: colors.green_dark,
+    color: colors.primary_dark,
   }
 })

@@ -1,43 +1,42 @@
-import React from 'react'
-import { Platform } from 'react-native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import React from "react";
+import { Platform } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import colors from '../styles/colors'
-import { PlantSelect } from '../pages/PlantSelect'
-import { MaterialIcons } from '@expo/vector-icons'
-import { MyPlants } from '../pages/MyPlants'
+import colors from "../styles/colors";
+import { MaterialIcons } from "@expo/vector-icons";
+import { DriverClass } from "../pages/DriverClass";
 
-const AppTab = createBottomTabNavigator()
+const AppTab = createBottomTabNavigator();
 
 export const AuthRoutes = () => {
   return (
     <AppTab.Navigator
       tabBarOptions={{
-        activeTintColor: colors.green,
+        activeTintColor: colors.primary,
         inactiveTintColor: colors.heading,
-        labelPosition: 'beside-icon',
+        labelPosition: "beside-icon",
         style: {
-          paddingVertical: Platform.OS === 'ios' ? 20 : 0,
-          height: 88
-        }
+          paddingVertical: Platform.OS === "ios" ? 20 : 0,
+          height: 88,
+        },
       }}
     >
       <AppTab.Screen
-        name="Nova Planta"
-        component={PlantSelect}
+        name="Iniciar Aula"
+        component={DriverClass}
         options={{
-          tabBarIcon: (({ size, color }) => (
+          tabBarIcon: ({ size, color }) => (
             <MaterialIcons
-              name="add-circle-outline"
+              name="check-circle-outline"
               size={size}
               color={color}
             />
-          ))
+          ),
         }}
       />
 
-      <AppTab.Screen
-        name="Minhas Plantas"
+      {/* <AppTab.Screen
+        name="Avaliação"
         component={MyPlants}
         options={{
           tabBarIcon: (({ size, color }) => (
@@ -48,7 +47,7 @@ export const AuthRoutes = () => {
             />
           ))
         }}
-      />
+      /> */}
     </AppTab.Navigator>
-  )
-}
+  );
+};

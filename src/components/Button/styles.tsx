@@ -5,7 +5,7 @@ import fonts from "../../styles/fonts";
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.primary,
     height: 56,
     borderRadius: 16,
     justifyContent: 'center',

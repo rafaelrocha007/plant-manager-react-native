@@ -13,7 +13,7 @@ export default StyleSheet.create({
     margin: 10
   },
   text: {
-    color: colors.green_dark,
+    color: colors.primary_dark,
     fontFamily: fonts.heading,
     marginVertical: 16
   }

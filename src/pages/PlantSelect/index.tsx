@@ -17,7 +17,7 @@ export function PlantSelect() {
   const [plants, setPlants] = useState<PlantProps[]>()
   const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>()
   const [environmentSelected, setEnvironmentSelected] = useState('all')
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [loadingMore, setLoadingMore] = useState(false)
 
@@ -35,7 +35,7 @@ export function PlantSelect() {
     const { data } = await api.get(`plants?_sort=name&order=asc&_page=${page}&_limit=8`)
 
     if (!data) {
-      return setLoading(true)
+      // return setLoading(true)
     }
 
     if (page > 1) {
@@ -126,7 +126,7 @@ export function PlantSelect() {
           onEndReached={({ distanceFromEnd }) => handleFetchMore(distanceFromEnd)}
           ListFooterComponent={
             loadingMore
-              ? <ActivityIndicator color={colors.green} />
+              ? <ActivityIndicator color={colors.primary} />
               : <></>
           }
         >
